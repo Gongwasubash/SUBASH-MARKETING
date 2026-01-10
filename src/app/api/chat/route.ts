@@ -20,9 +20,10 @@ export async function POST(req: NextRequest) {
     messageStore.addMessage(prompt);
 
     const llmStream = await client.chat.completions.create({
-      model: "c1/openai/gpt-4o/v-20241230",
+      model: "c1/openai/gpt-4o-mini/v-20241230",
       messages: messageStore.getOpenAICompatibleMessageList(),
       stream: true,
+      temperature: 0.7,
     });
 
     const responseStream = transformStream(
