@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { transformStream } from "@crayonai/stream";
 import { DBMessage, getMessageStore } from "./messageStore";
-import { SYSTEM_PROMPTS } from "./systemPrompts";
+import { tools } from "./tools";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,15 +20,13 @@ export async function POST(req: NextRequest) {
     const messageStore = getMessageStore(threadId);
     messageStore.addMessage(prompt);
 
-    const messages = [
-      { role: "system", content: SYSTEM_PROMPTS },
-      ...messageStore.getOpenAICompatibleMessageList()
-    ];
-
-    const llmStream = await client.chat.completions.create({
-      model: "gpt-4o",
-      messages,
+    const llmStream = await client.beta.chat.completions.runTools({
+      model: "c1/openai/gpt-4o/v-20241230",
+      temperature: 0.7,
+      messages: messageStore.getOpenAICompatibleMessageList(),
       stream: true,
+      tool_choice: tools.length > 0 ? "auto" : "none",
+      tools,
     });
 
     const responseStream = transformStream(
