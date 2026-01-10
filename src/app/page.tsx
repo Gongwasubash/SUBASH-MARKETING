@@ -86,16 +86,12 @@ const ChatInternal = () => {
       `}</style>
       
       <C1Chat 
-        apiUrl="/api/chat" 
+        apiUrl="/api/test" 
         disableThemeProvider 
         initialMessages={[
           {
-            role: "system" as const,
-            content: `You are an AI assistant with access to Google Sheets data. Here is the complete dataset:\n\n${sheetData}\n\nAnalyze this data and answer any questions users have about it. Provide insights, summaries, calculations, and detailed analysis based on this data.`
-          },
-          {
             role: "assistant" as const,
-            content: "Hello! I've loaded and analyzed your Google Sheets data. I can help you understand patterns, answer questions, perform calculations, and provide insights about your data. What would you like to know?"
+            content: "Hello! I am SUBASH AI. Testing basic functionality..."
           }
         ]}
       />

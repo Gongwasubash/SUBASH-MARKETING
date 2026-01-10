@@ -1,23 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
+  return NextResponse.json({ 
+    message: "API is working",
+    hasApiKey: !!process.env.THESYS_API_KEY,
+    timestamp: new Date().toISOString()
+  });
+}
+
+export async function POST(req: NextRequest) {
   try {
-    // Check environment variables
-    const envCheck = {
-      THESYS_API_KEY: process.env.THESYS_API_KEY ? 'Set' : 'Missing',
-      GOOGLE_API_KEY: process.env.GOOGLE_API_KEY ? 'Set' : 'Missing',
-      GEMINI_API_KEY: process.env.GEMINI_API_KEY ? 'Set' : 'Missing',
-    };
+    const body = await req.json();
     
     return NextResponse.json({
-      status: 'API Test',
-      environment: envCheck,
+      message: "Hello from SUBASH AI! I'm working correctly.",
+      received: body,
       timestamp: new Date().toISOString()
     });
-    
   } catch (error) {
     return NextResponse.json({ 
-      error: "Test failed", 
+      error: "Test failed",
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
