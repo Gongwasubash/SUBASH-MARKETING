@@ -86,12 +86,12 @@ const ChatInternal = () => {
       `}</style>
       
       <C1Chat 
-        apiUrl="/api/test" 
+        apiUrl="/api/chat" 
         disableThemeProvider 
         initialMessages={[
           {
             role: "assistant" as const,
-            content: "Hello! I am SUBASH AI. Testing basic functionality..."
+            content: "Hello! I am SUBASH AI. How can I help you today?"
           }
         ]}
       />
